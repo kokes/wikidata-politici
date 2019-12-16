@@ -1,0 +1,510 @@
+[
+    {
+        "tema": "poslanci",
+        "tabulka": "typ_organu",
+        "soubory": [
+            "poslanci.zip/typ_organu.unl"
+        ],
+        "sloupce": [
+            {
+                "sloupec": "id_typ_org",
+                "typ": "int",
+                "nullable": false,
+                "unique": true,
+                "popis": "Identifikátor typu orgánu"
+            },
+            {
+                "sloupec": "typ_id_typ_org",
+                "typ": "int",
+                "popis": "Identifikátor nadřazeného typu orgánu (typ_organu:id_typ_org), pokud je "
+            },
+            {
+                "sloupec": "nazev_typ_org_cz",
+                "typ": "char(X)",
+                "nullable": false,
+                "popis": "Název typu orgánu v češtině"
+            },
+            {
+                "sloupec": "nazev_typ_org_en",
+                "typ": "char(X)",
+                "popis": "Název typu orgánu v angličtině"
+            },
+            {
+                "sloupec": "typ_org_obecny",
+                "typ": "int",
+                "popis": "Obecný typ orgánu, pokud je vyplněný, odpovídá záznamu v typ_organu:id_typ_org. Pomocí tohoto sloupce lze najít např. všechny výbory v různých typech zastupitelských sborů."
+            },
+            {
+                "sloupec": "priorita",
+                "typ": "int",
+                "popis": "Priorita při výpisu"
+            }
+        ]
+    },
+    {
+        "tema": "poslanci",
+        "tabulka": "typ_funkce",
+        "soubory": [
+            "poslanci.zip/typ_funkce.unl"
+        ],
+        "sloupce": [
+            {
+                "sloupec": "id_typ_funkce",
+                "typ": "int",
+                "nullable": false,
+                "popis": "Identifikátor typu funkce",
+                "unique": true
+            },
+            {
+                "sloupec": "id_typ_org",
+                "typ": "int",
+                "nullable": false,
+                "popis": "Identifikátor typu orgánu, viz typ_organu:id_typ_org",
+                "fkey": [
+                    "poslanci_typ_organu",
+                    "id_typ_org"
+                ]
+            },
+            {
+                "sloupec": "typ_funkce_cz",
+                "typ": "char(X)",
+                "nullable": false,
+                "popis": "Název typu funkce v češtině"
+            },
+            {
+                "sloupec": "typ_funkce_en",
+                "typ": "char(X)",
+                "popis": "Název typu funkce v angličtině"
+            },
+            {
+                "sloupec": "priorita",
+                "typ": "int",
+                "nullable": false,
+                "popis": "Priorita při výpisu"
+            },
+            {
+                "sloupec": "typ_funkce_obecny",
+                "typ": "int",
+                "popis": "Obecný typ funkce, 1 - předseda, 2 - místopředseda, 3 - ověřovatel, jiné hodnoty se nepoužívají."
+            }
+        ]
+    },
+    {
+        "tema": "poslanci",
+        "tabulka": "funkce",
+        "soubory": [
+            "poslanci.zip/funkce.unl"
+        ],
+        "index": [
+            [
+                "id_organ"
+            ]
+        ],
+        "sloupce": [
+            {
+                "sloupec": "id_funkce",
+                "typ": "int",
+                "nullable": false,
+                "unique": true,
+                "popis": "Identifikátor funkce, používá se v zarazeni:id_fo"
+            },
+            {
+                "sloupec": "id_organ",
+                "typ": "int",
+                "nullable": false,
+                "popis": "Identifikátor orgánu, viz organy:id_organ",
+                "fkey": [
+                    "poslanci_organy",
+                    "id_organ"
+                ]
+            },
+            {
+                "sloupec": "id_typ_funkce",
+                "typ": "int",
+                "nullable": false,
+                "popis": "Typ funkce, viz typ_funkce:id_typ_funkce",
+                "fkey": [
+                    "poslanci_typ_funkce",
+                    "id_typ_funkce"
+                ]
+            },
+            {
+                "sloupec": "nazev_funkce_cz",
+                "typ": "char(X)",
+                "nullable": false,
+                "popis": "Název funkce, pouze pro interní použití"
+            },
+            {
+                "sloupec": "priorita",
+                "typ": "int",
+                "nullable": false,
+                "popis": "Priorita výpisu"
+            }
+        ]
+    },
+    {
+        "tema": "poslanci",
+        "tabulka": "organy",
+        "soubory": [
+            "poslanci.zip/organy.unl"
+        ],
+        "sloupce": [
+            {
+                "sloupec": "id_organ",
+                "typ": "int",
+                "nullable": false,
+                "unique": true,
+                "popis": "Identifikátor orgánu"
+            },
+            {
+                "sloupec": "organ_id_organ",
+                "typ": "int",
+                "popis": "Identifikátor nadřazeného orgánu, viz organy:id_organ"
+            },
+            {
+                "sloupec": "id_typ_organu",
+                "typ": "int",
+                "nullable": false,
+                "popis": "Typ orgánu, viz typ_organu:id_typ_organu"
+            },
+            {
+                "sloupec": "zkratka",
+                "typ": "char(X)",
+                "popis": "Zkratka orgánu, bez diakritiky, v některých připadech se zkratka při zobrazení nahrazuje jiným názvem",
+                "nullable": false
+            },
+            {
+                "sloupec": "nazev_organu_cz",
+                "typ": "char(X)",
+                "nullable": false,
+                "popis": "Název orgánu v češtině"
+            },
+            {
+                "sloupec": "nazev_organu_en",
+                "typ": "char(X)",
+                "popis": "Název orgánu v angličtině"
+            },
+            {
+                "sloupec": "od_organ",
+                "typ": "date",
+                "nullable": false,
+                "popis": "Ustavení orgánu"
+            },
+            {
+                "sloupec": "do_organ",
+                "typ": "date",
+                "popis": "Ukončení orgánu"
+            },
+            {
+                "sloupec": "priorita",
+                "typ": "int",
+                "popis": "Priorita výpisu orgánů"
+            },
+            {
+                "sloupec": "cl_organ_base",
+                "typ": "int",
+                "popis": "Pokud je nastaveno na 1, pak při výpisu členů se nezobrazují záznamy v tabulkce zarazeni kde cl_funkce == 0. Toto chování odpovídá tomu, že v některých orgánech nejsou členové a teprve z nich se volí funkcionáři, ale přímo se volí do určité funkce."
+            }
+        ]
+    },
+    {
+        "tema": "poslanci",
+        "tabulka": "osoby",
+        "soubory": [
+            "poslanci.zip/osoby.unl"
+        ],
+        "index": [
+            [
+                "prijmeni",
+                "jmeno"
+            ]
+        ],
+        "sloupce": [
+            {
+                "sloupec": "id_osoba",
+                "typ": "int",
+                "nullable": false,
+                "unique": true,
+                "popis": "Identifikátor osoby"
+            },
+            {
+                "sloupec": "pred",
+                "typ": "char(X)",
+                "popis": "Titul pred jmenem"
+            },
+            {
+                "sloupec": "prijmeni",
+                "typ": "char(X)",
+                "nullable": false,
+                "popis": "Příjmení, v některých případech obsahuje i dodatek typu \"st.\", \"ml.\""
+            },
+            {
+                "sloupec": "jmeno",
+                "typ": "char(X)",
+                "nullable": false,
+                "popis": "Jméno"
+            },
+            {
+                "sloupec": "za",
+                "typ": "char(X)",
+                "popis": "Titul za jménem"
+            },
+            {
+                "sloupec": "narozeni",
+                "typ": "date",
+                "popis": "Datum narození"
+            },
+            {
+                "sloupec": "pohlavi",
+                "typ": "char(X)",
+                "nullable": false,
+                "popis": "Pohlaví, \"M\" jako muž, ostatní hodnoty žena"
+            },
+            {
+                "sloupec": "zmena",
+                "typ": "date",
+                "popis": "Datum posledni změny"
+            },
+            {
+                "sloupec": "umrti",
+                "typ": "date",
+                "popis": "Datum úmrtí"
+            }
+        ]
+    },
+    {
+        "tema": "poslanci",
+        "tabulka": "zarazeni",
+        "soubory": [
+            "poslanci.zip/zarazeni.unl"
+        ],
+        "index": [
+            [
+                "id_osoba"
+            ]
+        ],
+        "sloupce": [
+            {
+                "sloupec": "id_osoba",
+                "typ": "int",
+                "nullable": false,
+                "popis": "Identifikátor osoby, viz osoba:id_osoba"
+            },
+            {
+                "sloupec": "id_of",
+                "typ": "int",
+                "nullable": false,
+                "popis": "Identifikátor orgánu či funkce: pokud je zároveň nastaveno zarazeni:cl_funkce == 0, pak id_o odpovídá organy:id_organ, pokud cl_funkce == 1, pak odpovídá funkce:id_funkce."
+            },
+            {
+                "sloupec": "cl_funkce",
+                "typ": "int",
+                "nullable": false,
+                "popis": "Status členství nebo funce: pokud je rovno 0, pak jde o členství, pokud 1, pak jde o funkci."
+            },
+            {
+                "sloupec": "od_o",
+                "typ": "datetime(year to hour)",
+                "popis": "Zařazení ",
+                "nullable": false
+            },
+            {
+                "sloupec": "do_o",
+                "typ": "datetime(year to hour)",
+                "popis": "Zařazení "
+            },
+            {
+                "sloupec": "od_f",
+                "typ": "date",
+                "popis": "Mandát "
+            },
+            {
+                "sloupec": "do_f",
+                "typ": "date",
+                "popis": "Mandát"
+            }
+        ]
+    },
+    {
+        "tema": "poslanci",
+        "tabulka": "poslanec",
+        "soubory": [
+            "poslanci.zip/poslanec.unl"
+        ],
+        "sloupce": [
+            {
+                "sloupec": "id_poslanec",
+                "typ": "int",
+                "nullable": false,
+                "popis": "Identifikátor poslance",
+                "unique": true
+            },
+            {
+                "sloupec": "id_osoba",
+                "typ": "int",
+                "nullable": false,
+                "popis": "Identifikátor osoby, viz osoba:id_osoba",
+                "fkey": [
+                    "poslanci_osoby",
+                    "id_osoba"
+                ]
+            },
+            {
+                "sloupec": "id_kraj",
+                "typ": "int",
+                "nullable": false,
+                "popis": "Volební kraj, viz organy:id_organu"
+            },
+            {
+                "sloupec": "id_kandidatka",
+                "typ": "int",
+                "nullable": false,
+                "popis": "Volební strana/hnutí, viz org:id_organu, pouze odkazuje na stranu/hnutí, za kterou byl zvolen a nemusí mít souvislost s členstvím v poslaneckém klubu."
+            },
+            {
+                "sloupec": "id_obdobi",
+                "typ": "int",
+                "nullable": false,
+                "popis": "Volební období, viz organy:id_organu"
+            },
+            {
+                "sloupec": "web",
+                "typ": "char(X)",
+                "popis": "URL vlastních stránek poslance"
+            },
+            {
+                "sloupec": "ulice",
+                "typ": "char(X)",
+                "popis": "Adresa regionální kanceláře, ulice."
+            },
+            {
+                "sloupec": "obec",
+                "typ": "char(X)",
+                "popis": "Adresa regionální kanceláře, obec."
+            },
+            {
+                "sloupec": "psc",
+                "typ": "char(X)",
+                "popis": "Adresa regionální kanceláře, PSČ."
+            },
+            {
+                "sloupec": "email",
+                "typ": "char(X)",
+                "popis": "E-mailová adresa poslance, případně obecná posta@psp.cz.",
+                "nullable": false
+            },
+            {
+                "sloupec": "telefon",
+                "typ": "char(X)",
+                "popis": "Adresa regionální kanceláře, telefon."
+            },
+            {
+                "sloupec": "fax",
+                "typ": "char(X)",
+                "popis": "Adresa regionální kanceláře, fax."
+            },
+            {
+                "sloupec": "psp_telefon",
+                "typ": "char(X)",
+                "popis": "Telefonní číslo do kanceláře v budovách PS."
+            },
+            {
+                "sloupec": "facebook",
+                "typ": "char(X)",
+                "popis": "URL stránky služby Facebook."
+            },
+            {
+                "sloupec": "foto",
+                "typ": "int",
+                "popis": "Pokud je rovno 1, pak existuje fotografie poslance."
+            }
+        ]
+    },
+    {
+        "tema": "poslanci",
+        "tabulka": "pkgps",
+        "soubory": [
+            "poslanci.zip/pkgps.unl"
+        ],
+        "sloupce": [
+            {
+                "sloupec": "id_poslanec",
+                "typ": "int",
+                "nullable": false,
+                "unique": true,
+                "popis": "Identifikátor poslance, viz poslanec:id_poslanec",
+                "fkey": [
+                    "poslanci_poslanec",
+                    "id_poslanec"
+                ]
+            },
+            {
+                "sloupec": "adresa",
+                "typ": "char(X)",
+                "nullable": false,
+                "popis": "Adresa kanceláře, jednotlivé položky jsou odděleny středníkem"
+            },
+            {
+                "sloupec": "sirka",
+                "typ": "char(X)",
+                "nullable": false,
+                "popis": "Severní šířka, WGS 84, formát GG.AABBCCC, GG = stupně, AA - minuty, BB - vteřiny, CCC - tisíciny vteřin"
+            },
+            {
+                "sloupec": "delka",
+                "typ": "char(X)",
+                "nullable": false,
+                "popis": "Východní délka, WGS 84, formát GG.AABBCCC, GG = stupně, AA - minuty, BB - vteřiny, CCC - tisíciny vteřin"
+            }
+        ]
+    },
+    {
+        "tema": "poslanci",
+        "tabulka": "osoba_extra",
+        "soubory": [
+            "poslanci.zip/osoba_extra.unl"
+        ],
+        "sloupce": [
+            {
+                "sloupec": "id_osoba",
+                "typ": "int",
+                "nullable": false,
+                "popis": "Identifikátor osoby, viz osoba:id_osoba",
+                "fkey": [
+                    "poslanci_osoby",
+                    "id_osoba"
+                ]
+            },
+            {
+                "sloupec": "id_org",
+                "typ": "int",
+                "nullable": false,
+                "popis": "Identifikátor orgánu, viz org:id_org"
+            },
+            {
+                "sloupec": "typ",
+                "typ": "int",
+                "nullable": false,
+                "popis": "Typ záznamu, viz výše."
+            },
+            {
+                "sloupec": "obvod",
+                "typ": "int",
+                "nullable": false,
+                "popis": "Je-li typ = 1, pak jde o číslo senátního obvodu"
+            },
+            {
+                "sloupec": "strana",
+                "typ": "char(X)",
+                "nullable": false,
+                "popis": "Je-li typ = 1, pak jde o název volební strany/hnutí či označení nezávislého kandidáta"
+            },
+            {
+                "sloupec": "id_external",
+                "typ": "int",
+                "nullable": false,
+                "popis": "Je-li typ = 1, pak je to identifikátor senátora na senat.cz"
+            }
+        ]
+    }
+]
