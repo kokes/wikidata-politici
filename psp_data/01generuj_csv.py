@@ -10,7 +10,6 @@ from functools import lru_cache
 from io import BytesIO, TextIOWrapper
 from datetime import datetime
 
-from dateutil.parser import parse
 import requests
 
 
@@ -45,16 +44,17 @@ def read_compressed_csv(zf, fn, mp):
                 if v.strip() == '':
                     dt[k] = None
                 elif types[k] in datetypes:
-                    try:
-                        dt[k] = datetime.strptime(v, '%Y-%m-%d')
-                    except ValueError:
-                        if '/' in v or '.' in v:
-                            dayfirst = True
-                        elif '-' in v:
-                            dayfirst = False
+                    if len(v) == 10:
+                        if '-' in v:
+                            dt[k] = datetime.strptime(v, '%Y-%m-%d')
+                        elif '.' in v:
+                            dt[k] = datetime.strptime(v, '%d.%m.%Y')
                         else:
                             raise ValueError(v)
-                        dt[k] = parse(v, dayfirst=dayfirst)
+                    elif len(v) == 13:
+                        dt[k] = datetime.strptime(v, '%Y-%m-%d %H')
+                    else:
+                        raise ValueError(v)
                 else:
                     dt[k] = v
 
