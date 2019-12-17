@@ -48,16 +48,23 @@ def read_compressed_csv(zf, fn, mp):
                     try:
                         dt[k] = datetime.strptime(v, '%Y-%m-%d')
                     except ValueError:
-                        dt[k] = parse(v, dayfirst=True)
+                        if '/' in v or '.' in v:
+                            dayfirst = True
+                        elif '-' in v:
+                            dayfirst = False
+                        else:
+                            raise ValueError(v)
+                        dt[k] = parse(v, dayfirst=dayfirst)
                 else:
                     dt[k] = v
 
             yield dt
 
 
+cdr = os.path.dirname(os.path.abspath(__file__))
 csv_dir = 'data/csv'
 os.makedirs(csv_dir, exist_ok=True)
-with open('mapping.json') as f:
+with open(os.path.join(cdr, 'mapping.json')) as f:
     mapping = json.load(f)
 
 

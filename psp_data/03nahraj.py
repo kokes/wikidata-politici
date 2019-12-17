@@ -5,7 +5,8 @@ import sqlite3
 
 from glob import glob
 
-with open('mapping.json') as f:
+cdr = os.path.dirname(os.path.abspath(__file__))
+with open(os.path.join(cdr, 'mapping.json')) as f:
     mapping = json.load(f)
 
 conn = sqlite3.connect('data.db')
