@@ -9,7 +9,7 @@ import sqlite3
 # nahraj z query service do CSV
 url = 'https://query.wikidata.org/sparql'
 
-query = '''SELECT ?item ?itemLabel ?Czech_parliament_ID ?official_website ?date_of_birth ?sex_or_genderLabel ?place_of_birthLabel ?given_nameLabel WHERE {
+query = '''SELECT ?item ?itemLabel ?Czech_parliament_ID ?official_website ?date_of_birth ?sex_or_genderLabel ?place_of_birthLabel ?given_nameLabel ?Facebook_ID ?Twitter_username ?Instagram_username WHERE {
   SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
   OPTIONAL { ?item wdt:P6828 ?Czech_parliament_ID. }
   OPTIONAL {  }
@@ -18,6 +18,9 @@ query = '''SELECT ?item ?itemLabel ?Czech_parliament_ID ?official_website ?date_
   OPTIONAL { ?item wdt:P21 ?sex_or_gender. }
   OPTIONAL { ?item wdt:P19 ?place_of_birth. }
   OPTIONAL { ?item wdt:P735 ?given_name. }
+  OPTIONAL { ?item wdt:P2013 ?Facebook_ID. }
+  OPTIONAL { ?item wdt:P2002 ?Twitter_username. }
+  OPTIONAL { ?item wdt:P2003 ?Instagram_username. }
 }
 LIMIT 10000'''
 
@@ -54,5 +57,6 @@ with open(tfn) as f:
     cr = csv.reader(f)
     next(cr)
     for row in cr:
+        row = [None if j == '' else j for j in row]
         conn.execute(query, row)
 conn.commit()
