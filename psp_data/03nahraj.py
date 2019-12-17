@@ -3,6 +3,8 @@ import json
 import os
 import sqlite3
 
+from glob import glob
+
 with open('mapping.json') as f:
     mapping = json.load(f)
 
@@ -22,5 +24,8 @@ for mp in mapping:
         next(cr)
         for row in cr:
             conn.execute(query, row)
+
+for fn in glob('views/*.sql'):
+    conn.execute(open(fn).read())
 
 conn.commit()
