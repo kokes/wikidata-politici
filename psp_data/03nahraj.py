@@ -15,7 +15,7 @@ conn.executescript(open('schema.sql').read())
 for mp in mapping:
     tabulka = f'{mp["tema"]}_{mp["tabulka"]}'
 
-    drn = 'data/csv'
+    drn = os.path.join(cdr, 'data/csv')
     fn = os.path.join(drn, tabulka + '.csv')
 
     qs = ', '.join(['?']*len(mp['sloupce']))
@@ -26,7 +26,7 @@ for mp in mapping:
         for row in cr:
             conn.execute(query, row)
 
-for fn in glob('views/*.sql'):
-    conn.execute(open(fn).read())
+for fn in glob(os.path.join(cdr, 'views', '*.sql')):
+    conn.executescript(open(fn).read())
 
 conn.commit()

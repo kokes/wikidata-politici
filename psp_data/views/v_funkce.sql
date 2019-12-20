@@ -1,3 +1,4 @@
+DROP VIEW IF EXISTS v_poslanci_funkce;
 CREATE VIEW v_poslanci_funkce AS
 SELECT
 	os.id_osoba, jmeno, prijmeni, substr(narozeni, 0, 11) as narozeni,
@@ -11,7 +12,7 @@ FROM
 		ON fn.id_funkce = zr.id_of
 	inner join poslanci_organy org
 		ON org.id_organ = fn.id_organ
-	
+
 where cl_funkce = 1
 -- and nazev_organu_cz in ('Vláda České republiky', 'Poslanecká sněmovna', 'Národní shromáždění', 'Evropský parlament', 'Bankovní rada České národní banky')
 
