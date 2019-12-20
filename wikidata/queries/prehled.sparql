@@ -1,0 +1,14 @@
+SELECT ?item ?itemLabel ?Czech_parliament_ID ?official_website ?date_of_birth ?sex_or_genderLabel ?place_of_birthLabel ?given_nameLabel ?Facebook_ID ?Twitter_username ?Instagram_username WHERE {
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
+  OPTIONAL { ?item wdt:P6828 ?Czech_parliament_ID. }
+  OPTIONAL {  }
+  OPTIONAL { ?item wdt:P856 ?official_website. }
+  OPTIONAL { ?item wdt:P569 ?date_of_birth. }
+  OPTIONAL { ?item wdt:P21 ?sex_or_gender. }
+  OPTIONAL { ?item wdt:P19 ?place_of_birth. }
+  OPTIONAL { ?item wdt:P735 ?given_name. }
+  OPTIONAL { ?item wdt:P2013 ?Facebook_ID. }
+  OPTIONAL { ?item wdt:P2002 ?Twitter_username. }
+  OPTIONAL { ?item wdt:P2003 ?Instagram_username. }
+}
+LIMIT 100000
