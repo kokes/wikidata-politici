@@ -62,7 +62,7 @@ def read_compressed_csv(zf, fn, mp):
 
 
 cdr = os.path.dirname(os.path.abspath(__file__))
-csv_dir = 'data/csv'
+csv_dir = os.path.join(cdr, 'data/csv')
 os.makedirs(csv_dir, exist_ok=True)
 with open(os.path.join(cdr, 'mapping.json')) as f:
     mapping = json.load(f)
