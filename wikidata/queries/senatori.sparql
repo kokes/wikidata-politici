@@ -1,0 +1,5 @@
+SELECT ?senator ?senatorLabel WHERE {
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "cs". }
+  ?senator p:P39/ps:P39 wd:Q18941264.
+}
+LIMIT 10000
