@@ -60,24 +60,28 @@ def read_compressed_csv(zf, fn, mp):
 
             yield dt
 
+def main():
+    cdr = os.path.dirname(os.path.abspath(__file__))
+    csv_dir = os.path.join(cdr, 'data/csv')
+    os.makedirs(csv_dir, exist_ok=True)
+    with open(os.path.join(cdr, 'mapping.json')) as f:
+        mapping = json.load(f)
 
-cdr = os.path.dirname(os.path.abspath(__file__))
-csv_dir = os.path.join(cdr, 'data/csv')
-os.makedirs(csv_dir, exist_ok=True)
-with open(os.path.join(cdr, 'mapping.json')) as f:
-    mapping = json.load(f)
+
+    for mp in mapping:
+        tbl = f'{mp["tema"]}_{mp["tabulka"]}'
+        tfn = os.path.join(csv_dir, f'{tbl}.csv')
+        print(tbl)
+        cols = [j['sloupec'] for j in mp['sloupce']]
+        with open(tfn, 'w') as fw:
+            cw = csv.DictWriter(fw, fieldnames=cols)
+            cw.writeheader()
+            for ffn in mp['soubory']:
+                print('\t', ffn)
+                zf, fn = ffn.split('/')
+                for el in read_compressed_csv(zf, fn, mp['sloupce']):
+                    cw.writerow(el)
 
 
-for mp in mapping:
-    tbl = f'{mp["tema"]}_{mp["tabulka"]}'
-    tfn = os.path.join(csv_dir, f'{tbl}.csv')
-    print(tbl)
-    cols = [j['sloupec'] for j in mp['sloupce']]
-    with open(tfn, 'w') as fw:
-        cw = csv.DictWriter(fw, fieldnames=cols)
-        cw.writeheader()
-        for ffn in mp['soubory']:
-            print('\t', ffn)
-            zf, fn = ffn.split('/')
-            for el in read_compressed_csv(zf, fn, mp['sloupce']):
-                cw.writerow(el)
+if __name__ == '__main__':
+    main()

@@ -1,0 +1,6 @@
+data.db
+psp_data/data/
+wikidata/csv/
+psp_data/schema.sql
+.DS_Store
+__pycache__
