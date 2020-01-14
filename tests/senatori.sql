@@ -1,9 +1,14 @@
-SELECT
-	id_osoba, v_ids.wikidata_id, jmeno, prijmeni, min(od), min(do)
-FROM
-	v_poslanci_organy org
-	inner join v_ids on v_ids.psp_id = org.id_osoba
-	where zkratka like 'SE%' and zkratka != 'SEI'
-	and wikidata_id not in (select substr(senator, instr(senator, '/Q') + 1)from wikidata_senatori)
-	group by 1
-LIMIT 1000;
+select
+   v_ids.wikidata_id,
+   org.id_osoba, jmeno, prijmeni, narozeni, zkratka, nazev_organu_cz,
+   od, max(do) as do,
+   'Senátní obvod č. ' || obvod as obvod, strana,
+   lag(wikidata_id) over(partition by obvod order by od asc) preceded_by,
+   lead(wikidata_id) over(partition by obvod order by od asc) succeeded_by
+from v_poslanci_organy org
+left join poslanci_osoba_extra ex on ex.id_osoba = org.id_osoba
+inner join v_ids on v_ids.psp_id = org.id_osoba
+where nazev_organu_cz = 'Senát' -- and obvod = 5
+group by org.id_osoba, od
+order by prijmeni, jmeno, od
+limit 1000;
