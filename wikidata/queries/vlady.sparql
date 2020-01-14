@@ -1,0 +1,8 @@
+SELECT ?gov ?govLabel ?inception ?dissolved WHERE {
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "cs". }
+  ?gov wdt:P31 wd:Q5015587.
+  OPTIONAL { ?gov wdt:P571 ?inception. }
+  OPTIONAL { ?gov wdt:P576 ?dissolved. }
+}
+ORDER BY ASC(?inception)
+LIMIT 100
