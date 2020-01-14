@@ -31,6 +31,7 @@ def main():
             cr = csv.reader(f)
             next(cr)
             for row in cr:
+                row = [None if j == '' else j for j in row] # empty -> NULL
                 conn.execute(query, row)
 
     for fn in glob(os.path.join(cdr, 'views', '*.sql')):
