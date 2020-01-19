@@ -1,0 +1,16 @@
+# TODO: prejmenovat na positions held nebo tak neco
+SELECT ?person ?personLabel ?position ?positionLabel ?election ?electionLabel ?startedLabel ?endedLabel
+       ?district ?districtLabel ?term ?termLabel ?replaces ?replacesLabel ?replacedBy ?replacedByLabel
+WHERE {
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "cs". }  
+  ?person p:P6828 ?parliamentId.
+  ?person p:P39/ps:P39 ?position.
+  OPTIONAL{?position pq:P2715 ?election.} # a vytahnem si obdobi
+  OPTIONAL{?position pq:P580 ?started.}
+  OPTIONAL{?position pq:P582 ?ended.}
+  OPTIONAL{?position pq:P768 ?district.}
+  OPTIONAL{?position pq:P2937 ?term.}
+  OPTIONAL{?position pq:P1365 ?replaces.}
+  OPTIONAL{?position pq:P1366 ?replacedBy.}
+}
+LIMIT 100000
