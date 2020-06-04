@@ -9,15 +9,13 @@ from contextlib import contextmanager
 from functools import lru_cache
 from io import BytesIO, TextIOWrapper
 from datetime import datetime
-
-import requests
+from urllib.request import urlopen
 
 
 @lru_cache(maxsize=None)
 def dl(url):
-    r = requests.get(url)
-    assert r.ok, r.status_code
-    return BytesIO(r.content)
+    r = urlopen(url)
+    return BytesIO(r.read())
 
 
 @contextmanager
