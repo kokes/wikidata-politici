@@ -358,7 +358,7 @@
             {
                 "sloupec": "id_kandidatka",
                 "typ": "int",
-                "nullable": false,
+                "nullable": true,
                 "popis": "Volební strana/hnutí, viz org:id_organu, pouze odkazuje na stranu/hnutí, za kterou byl zvolen a nemusí mít souvislost s členstvím v poslaneckém klubu."
             },
             {
