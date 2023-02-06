@@ -3,7 +3,7 @@ CREATE VIEW v_poslanci_organy AS
 SELECT
 	os.id_osoba,
 	os.jmeno, os.prijmeni, os.narozeni,
-	org.zkratka, org.nazev_organu_cz,
+	org.id_organ, org.zkratka, org.nazev_organu_cz,
 	nullif(substr(zr.od_o, 1, 10), '') "od",
 	nullif(substr(zr.do_o, 1, 10), '') "do"
 FROM
